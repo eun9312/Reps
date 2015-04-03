@@ -3,7 +3,7 @@ package com.dhcs.reps;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,19 +18,19 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity implements SensorEventListener{
+public class MainActivity extends Activity implements SensorEventListener{
 	private String currName;
 	private String currWeight;
 	
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
-    private float prevX,prevY,prevZ;
+    private int prevX,prevY,prevZ;
     private int cnt;
     private boolean isOn;
     
     private List<String> recordList;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -85,14 +85,14 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-	    float x =  event.values[0];
-	    float y =  event.values[1];
-	    float z =  event.values[2];
+	    int x =  (int)event.values[0];
+	    int y =  (int)event.values[1];
+	    int z =  (int)event.values[2];
 	    
 	    if (isOn) {
-	    	if ((prevX > 0.5 && x < -0.5) ||
-	    		(prevY > 0.5 && y < -0.5) ||
-	    		(prevZ > 0.5 && z < -0.5)) {
+	    	if ((prevX > 2 && x < -2) ||
+	    		(prevY > 2 && y < -2) ||
+	    		(prevZ > 2 && z < -2)) {
 	    		cnt++;
 	    		TextView count = (TextView)findViewById(R.id.count);
 	    		count.setText(""+cnt);

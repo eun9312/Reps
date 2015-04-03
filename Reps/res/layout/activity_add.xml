@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="60dp"
         android:text="New Workout"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -29,30 +29,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textCapSentences|textPersonName"
-        android:lines="1"
-        android:maxLines="1"
-        android:singleLine="true" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="Weight"
         android:inputType="number"
@@ -60,23 +42,37 @@
         android:maxLines="1"
         android:singleLine="true" />
 
-    <Button
-        android:id="@+id/button1"
+    <EditText
+        android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
-        android:text="Add"
-        android:onClick="addWorkOut" />
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textCapSentences|textPersonName"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
+        android:layout_below="@+id/editText2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
+        android:layout_marginTop="25dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:onClick="addWorkOut"
+        android:text="Add" />
     
     </RelativeLayout>
