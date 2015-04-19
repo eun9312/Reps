@@ -15,28 +15,41 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:text="Reps"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="80px" />
+        android:text="New Weight"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/button2"
+
+    <EditText
+        android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
-        android:onClick="load"
-        android:text="View Progress" />
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="Weight (lb)"
+        android:inputType="number"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp" 
-        android:onClick="newWorkOut"
-        android:text="Track Workout" />
+        android:layout_marginBottom="70dp"
+        android:onClick="editWeight"
+        android:text="Change" />
 
 </RelativeLayout>

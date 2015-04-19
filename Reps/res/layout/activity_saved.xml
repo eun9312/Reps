@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
      
           <TextView
-          android:id="@+id/date"
+          android:id="@+id/name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
@@ -28,19 +28,19 @@
           android:layout_below="@+id/textView1"
           android:layout_marginTop="21dp"
           android:gravity="center"
-          android:text="date"
+          android:text="name"
           android:textAppearance="?android:attr/textAppearanceSmall" />
           
                     <TextView
-          android:id="@+id/record"
+          android:id="@+id/date"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
-          android:layout_below="@+id/date"
+          android:layout_below="@+id/name"
           android:layout_marginTop="21dp"
           android:gravity="center"
-          android:text="record"
+          android:text="date"
           android:textAppearance="?android:attr/textAppearanceSmall" />
                     
         <Button

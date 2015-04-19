@@ -18,18 +18,6 @@
         android:text="Do you want to save your workout?"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-     
-          <TextView
-          android:id="@+id/record"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentRight="true"
-          android:layout_below="@+id/textView1"
-          android:layout_marginTop="21dp"
-          android:gravity="center"
-          android:text="record"
-          android:textAppearance="?android:attr/textAppearanceSmall" />
           
               <Button
         android:id="@+id/button1"
