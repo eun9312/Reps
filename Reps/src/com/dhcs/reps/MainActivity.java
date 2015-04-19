@@ -1,10 +1,17 @@
 package com.dhcs.reps;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,9 +31,10 @@ public class MainActivity extends Activity implements SensorEventListener{
 	
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
-    private int prevX,prevY,prevZ;
     private int cnt;
     private boolean isOn;
+    SharedPreferences sharedPref;
+    private double prevAcc;
     
     private List<String> recordList;
 
@@ -38,13 +46,21 @@ public class MainActivity extends Activity implements SensorEventListener{
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 	    mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 	    
-        prevX = 0;
-        prevY = 0;
-        prevZ = 0;
         cnt = 0;
         isOn = false;
         recordList = new ArrayList<String>();
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        prevAcc = 0;
 	}
+    
+    public void init(View v) {
+		setContentView(R.layout.activity_main);
+        cnt = 0;
+        isOn = false;
+        recordList = new ArrayList<String>();
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        prevAcc = 0;
+    }
 	
 	public void newWorkOut(View v) {
 		setContentView(R.layout.activity_add);
@@ -85,23 +101,21 @@ public class MainActivity extends Activity implements SensorEventListener{
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-	    int x =  (int)event.values[0];
-	    int y =  (int)event.values[1];
-	    int z =  (int)event.values[2];
+	    double x =  event.values[0];
+	    double y =  event.values[1];
+	    double z =  event.values[2];
+	    
+	    double acc = Math.sqrt(x*x + y*y + z*z);
 	    
 	    if (isOn) {
-	    	if ((prevX > 2 && x < -2) ||
-	    		(prevY > 2 && y < -2) ||
-	    		(prevZ > 2 && z < -2)) {
+	    	if (acc - prevAcc > 5) {
 	    		cnt++;
 	    		TextView count = (TextView)findViewById(R.id.count);
 	    		count.setText(""+cnt);
 	    	}
 	    }
+	    prevAcc = acc;
 		
-	    prevX = x;
-	    prevY = y;
-	    prevZ = z;
 	}
 
 	@Override
@@ -126,9 +140,6 @@ public class MainActivity extends Activity implements SensorEventListener{
 	  public void rest(final View v) {
 		  setContentView(R.layout.activity_rest);
 		  isOn = false;
-	      prevX = 0;
-	      prevY = 0;
-	      prevZ = 0;
 	      recordList.add(""+cnt);
 	      cnt = 0;
 	      final TextView timer = (TextView)findViewById(R.id.timer);
@@ -155,4 +166,28 @@ public class MainActivity extends Activity implements SensorEventListener{
 			}
 			record.setText(recordString);
 	  }
+	  
+	  public void save(View v) {
+		  SharedPreferences.Editor editor = sharedPref.edit();
+		  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		  Calendar cal = Calendar.getInstance();
+		  String saveString = dateFormat.format(cal.getTime()) + " ";
+		  for (String cnt : recordList) {
+			  saveString += cnt + " ";
+		  }
+		  editor.putString(currName + " " + currWeight + "lb",saveString);
+		  editor.commit();
+		  setContentView(R.layout.activity_saved);
+		  TextView date = (TextView)findViewById(R.id.date);
+		  date.setText(currName + " " + currWeight);
+		  TextView record = (TextView)findViewById(R.id.record);
+		  record.setText(saveString);
+	  }
+	  
+	  @SuppressWarnings("unchecked")
+	  public void load(View v) {
+		  setContentView(R.layout.activity_load);
+		  Map<String, String> data = (Map<String, String>) sharedPref.getAll();
+	  }
+	  
 }

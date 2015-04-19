@@ -27,6 +27,7 @@
         android:layout_alignBottom="@+id/button1"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40dp"
+        android:onClick="load"
         android:text="Saved" />
 
     <TextView
