@@ -21,14 +21,16 @@ import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements SensorEventListener{
-	private String currName;
+	private String currType;
 	private String currWeight;
-	private int currRestTime;
+	private String currRestTime;
 	
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
@@ -41,11 +43,12 @@ public class MainActivity extends Activity implements SensorEventListener{
     
     private List<String> recordList;
     //each element in recordList represents each set in a form of "weight count"
+    private String[] arraySpinner;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_start);
 		
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 	    mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
@@ -57,6 +60,16 @@ public class MainActivity extends Activity implements SensorEventListener{
         prevAcc = 0;
         currSet = 1;
         isCountDownOn = false;
+        
+        new CountDownTimer(2000, 1000) {
+
+   	     public void onTick(long millisUntilFinished) {
+   	     }
+
+   	     public void onFinish() {
+   	    	setContentView(R.layout.activity_main);
+   	     }
+   	  }.start();
 	}
     
     public void init(View v) {
@@ -71,19 +84,30 @@ public class MainActivity extends Activity implements SensorEventListener{
     }
 	
 	public void newWorkOut(View v) {
+		setContentView(R.layout.activity_new);
+	}
+	
+	public void add(View v) {
 		setContentView(R.layout.activity_add);
+		this.arraySpinner = new String[] {
+	            "Benchpress", "Deadlift", "Squat"
+	        };
+	        Spinner s = (Spinner) findViewById(R.id.spinner1);
+	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+	                android.R.layout.simple_spinner_item, arraySpinner);
+	        s.setAdapter(adapter);
 	}
 	
 	public void addWorkOut(View v) {
-		EditText nameField = (EditText)findViewById(R.id.editText1);
 		EditText weightField = (EditText)findViewById(R.id.editText2);
 		EditText restTimeField = (EditText)findViewById(R.id.editText3);
+		Spinner spinner = (Spinner)findViewById(R.id.spinner1);
 		
-		currName = nameField.getText().toString();
 		currWeight = weightField.getText().toString();
-		currRestTime = Integer.parseInt(restTimeField.getText().toString());
+		currRestTime = restTimeField.getText().toString();
+		currType = spinner.getSelectedItem().toString();
 
-		if (currName.length() == 0 || currWeight.length() == 0) {
+		if (currWeight.length() == 0 || currRestTime.length() == 0) {
 			TextView error = (TextView)findViewById(R.id.error);
 			error.setText("Invalid Input");
 		}
@@ -96,7 +120,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 		isOn = true;
 		TextView name = (TextView)findViewById(R.id.currname);
 		TextView weight = (TextView)findViewById(R.id.currweight);
-		name.setText(currName);
+		name.setText(currType);
 		weight.setText(currWeight+"lb");
 		TextView record = (TextView)findViewById(R.id.record);
 		record.setText("Current Set: " + currSet);
@@ -160,7 +184,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 	      cnt = 0;
 	      currSet++;
 	      final TextView timer = (TextView)findViewById(R.id.timer);
-	      int restTimeMiliSec = currRestTime * 1000;
+	      int restTimeMiliSec = Integer.parseInt(currRestTime) * 1000;
 	      isCountDownOn = true;
 	      
 	      new CountDownTimer(restTimeMiliSec, 1000) {
@@ -199,12 +223,12 @@ public class MainActivity extends Activity implements SensorEventListener{
 		  for (String rec : recordList) {
 			  saveString += rec + "\n";
 		  }
-		  editor.putString(dateString + "\n" + currName, saveString);
+		  editor.putString(dateString + "\n" + currType, saveString);
 		  editor.commit();
 		  setContentView(R.layout.activity_saved);
 		  TextView name = (TextView)findViewById(R.id.name);
 		  TextView date = (TextView)findViewById(R.id.date);
-		  name.setText(currName);
+		  name.setText(currType);
 		  date.setText(dateString);
 	  }
 	  
