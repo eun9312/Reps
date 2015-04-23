@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,13 +37,13 @@ public class MainActivity extends Activity implements SensorEventListener{
 	private Sensor mAccelerometer;
     private int cnt;
     private boolean isOn;
-    SharedPreferences sharedPref;
     private double prevAcc;
     private int currSet;
     private boolean isCountDownOn;
+    SharedPreferences sharedPref;
     
-    private List<String> recordList;
-    //each element in recordList represents each set in a form of "weight count"
+    private Map<String, Map<Integer, List<Integer>>> record;
+    //Map<exercise type, Map<weight, List<number of reps>>>
     private String[] arraySpinner;
 
     @Override
@@ -55,11 +56,11 @@ public class MainActivity extends Activity implements SensorEventListener{
 	    
         cnt = 0;
         isOn = false;
-        recordList = new ArrayList<String>();
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        record = new HashMap<String, Map<Integer, List<Integer>>>();
         prevAcc = 0;
         currSet = 1;
         isCountDownOn = false;
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         
         new CountDownTimer(2000, 1000) {
 
@@ -76,18 +77,50 @@ public class MainActivity extends Activity implements SensorEventListener{
 		setContentView(R.layout.activity_main);
         cnt = 0;
         isOn = false;
-        recordList = new ArrayList<String>();
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        record = new HashMap<String, Map<Integer, List<Integer>>>();
         prevAcc = 0;
         currSet = 1;
         isCountDownOn = false;
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
     }
 	
 	public void newWorkOut(View v) {
 		setContentView(R.layout.activity_new);
 	}
 	
+	public void add_pre(View v) {
+		  isOn = false;
+		  Map<Integer, List<Integer>> exerciseData = record.get(currType);
+		  if (exerciseData == null) {
+			  exerciseData = new HashMap<Integer, List<Integer>>();
+			  List<Integer> repsData = new ArrayList<Integer>();
+			  repsData.add(cnt);
+			  exerciseData.put(Integer.parseInt(currWeight), repsData);
+			  record.put(currType, exerciseData);
+		  }
+		  else {
+			  List<Integer> repsData = exerciseData.get(Integer.parseInt(currWeight));
+			  if (repsData == null) {
+				  repsData = new ArrayList<Integer>();
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+			  else {
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+		  }
+		  
+		  cnt = 0;
+	      currSet++;
+	      
+	      add(v);
+	}
+	
 	public void add(View v) {
+		isCountDownOn = false;
 		setContentView(R.layout.activity_add);
 		this.arraySpinner = new String[] {
 	            "Benchpress", "Deadlift", "Squat"
@@ -114,17 +147,24 @@ public class MainActivity extends Activity implements SensorEventListener{
 		else setContentView(R.layout.activity_place);
 	}
 	
+	public void ready(View v) {
+		isCountDownOn=false;
+		setContentView(R.layout.activity_ready);
+		TextView info = (TextView)findViewById(R.id.info);
+		info.setText(currType + ": " + currWeight+" lb");
+		TextView recordtxt = (TextView)findViewById(R.id.textView1);
+		recordtxt.setText("Current Set: " + currSet);
+	}
+	
 	public void startMeasure(View v) {
 		setContentView(R.layout.activity_measure);
 		
 		isOn = true;
-		TextView name = (TextView)findViewById(R.id.currname);
-		TextView weight = (TextView)findViewById(R.id.currweight);
-		name.setText(currType);
-		weight.setText(currWeight+"lb");
-		TextView record = (TextView)findViewById(R.id.record);
-		record.setText("Current Set: " + currSet);
-		TextView count = (TextView)findViewById(R.id.count);
+		TextView info = (TextView)findViewById(R.id.info);
+		info.setText(currType + ": " + currWeight+" lb");
+		TextView recordtxt = (TextView)findViewById(R.id.textView1);
+		recordtxt.setText("Current Set: " + currSet);
+		TextView count = (TextView)findViewById(R.id.cnt);
 		count.setText(""+cnt);
 	}
 
@@ -139,7 +179,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 	    if (isOn) {
 	    	if (acc - prevAcc > 2) {
 	    		cnt++;
-	    		TextView count = (TextView)findViewById(R.id.count);
+	    		TextView count = (TextView)findViewById(R.id.cnt);
 	    		count.setText(""+cnt);
 	    		isOn = false;
 	    		new CountDownTimer(1000, 1000) {
@@ -180,9 +220,35 @@ public class MainActivity extends Activity implements SensorEventListener{
 	  public void rest(final View v) {
 		  setContentView(R.layout.activity_rest);
 		  isOn = false;
-	      recordList.add(currWeight + " " + cnt);
-	      cnt = 0;
+		  Map<Integer, List<Integer>> exerciseData = record.get(currType);
+		  if (exerciseData == null) {
+			  exerciseData = new HashMap<Integer, List<Integer>>();
+			  List<Integer> repsData = new ArrayList<Integer>();
+			  repsData.add(cnt);
+			  exerciseData.put(Integer.parseInt(currWeight), repsData);
+			  record.put(currType, exerciseData);
+		  }
+		  else {
+			  List<Integer> repsData = exerciseData.get(Integer.parseInt(currWeight));
+			  if (repsData == null) {
+				  repsData = new ArrayList<Integer>();
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+			  else {
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+		  }
+		  
+		  cnt = 0;
 	      currSet++;
+		  TextView info = (TextView)findViewById(R.id.info);
+		  info.setText(currType + ": " + currWeight+" lb");
+		  TextView recordtxt = (TextView)findViewById(R.id.textView1);
+		  recordtxt.setText("Current Set: " + currSet);
 	      final TextView timer = (TextView)findViewById(R.id.timer);
 	      int restTimeMiliSec = Integer.parseInt(currRestTime) * 1000;
 	      isCountDownOn = true;
@@ -190,23 +256,42 @@ public class MainActivity extends Activity implements SensorEventListener{
 	      new CountDownTimer(restTimeMiliSec, 1000) {
 
 	    	     public void onTick(long millisUntilFinished) {
-	    	         timer.setText(millisUntilFinished / 1000 + "sec");
+	    	         timer.setText(millisUntilFinished / 1000 + "");
 	    	     }
 
 	    	     public void onFinish() {
-	    	    	 if (isCountDownOn) reMeasure(v);
+	    	    	 if (isCountDownOn) ready(v);
 	    	     }
 	    	  }.start();
 	  }
 	  
-	  public void reMeasure(View v) {
-		  setContentView(R.layout.activity_remeasure);
-	  }
-	  
-	  public void editWeight(View v) {
-		  EditText weightField = (EditText)findViewById(R.id.editText2);
-		  currWeight = weightField.getText().toString();
-		  if (currWeight.length() > 0) startMeasure(v);
+	  public void finish_pre(View v) {
+		  isOn = false;
+		  Map<Integer, List<Integer>> exerciseData = record.get(currType);
+		  if (exerciseData == null) {
+			  exerciseData = new HashMap<Integer, List<Integer>>();
+			  List<Integer> repsData = new ArrayList<Integer>();
+			  repsData.add(cnt);
+			  exerciseData.put(Integer.parseInt(currWeight), repsData);
+			  record.put(currType, exerciseData);
+		  }
+		  else {
+			  List<Integer> repsData = exerciseData.get(Integer.parseInt(currWeight));
+			  if (repsData == null) {
+				  repsData = new ArrayList<Integer>();
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+			  else {
+				  repsData.add(cnt);
+				  exerciseData.put(Integer.parseInt(currWeight), repsData);
+				  record.put(currType, exerciseData);
+			  }
+		  }
+		  
+		  cnt = 0;
+		  finish(v);
 	  }
 	
 	  public void finish(View v) {
@@ -219,55 +304,29 @@ public class MainActivity extends Activity implements SensorEventListener{
 		  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		  Calendar cal = Calendar.getInstance();
 		  String dateString = dateFormat.format(cal.getTime());
-		  String saveString = "";
-		  for (String rec : recordList) {
-			  saveString += rec + "\n";
-		  }
-		  editor.putString(dateString + "\n" + currType, saveString);
-		  editor.commit();
+		  
+		  Set<String> typeList = record.keySet();
+		  for (String type : typeList) {
+			  Map<Integer, List<Integer>> weightData = record.get(type);
+			  Set<Integer> weightList = weightData.keySet();
+			  for (Integer weight : weightList) {
+				  List<Integer> repsList = weightData.get(weight);
+				  String repsString = "";
+				  for (Integer rep : repsList) {
+					  repsString += rep + " ";
+				  }
+				  editor.putString(dateString + " " + type + " " + weight, repsString);
+				  editor.commit();
+			  }
+		  }		  
+		  
+
 		  setContentView(R.layout.activity_saved);
-		  TextView name = (TextView)findViewById(R.id.name);
-		  TextView date = (TextView)findViewById(R.id.date);
-		  name.setText(currType);
-		  date.setText(dateString);
 	  }
 	  
 	  @SuppressWarnings("unchecked")
 	  public void load(View v) {
 		  setContentView(R.layout.activity_load);
-		  Map<String, ?> data = (Map<String, String>) sharedPref.getAll();
-		  Set<String> keySet = data.keySet();
-		  List<String> keyList = new ArrayList<String>();
-		  keyList.addAll(keySet);
-		  Collections.sort(keyList);
-		  Collections.reverse(keyList);
-		  
-		  if (keyList.size() > 0) {
-			  String key0 = keyList.get(0);
-			  String[] parts0 = key0.split("\n");
-			  TextView name1 = (TextView)findViewById(R.id.name1);
-			  TextView date1 = (TextView)findViewById(R.id.date1);
-			  name1.setText(parts0[1]);
-			  date1.setText(parts0[0]);
-		  }
-
-		  if (keyList.size() > 1) {
-			  String key1 = keyList.get(1);
-			  String[] parts1 = key1.split("\n");
-			  TextView name2 = (TextView)findViewById(R.id.name2);
-			  TextView date2 = (TextView)findViewById(R.id.date2);
-			  name2.setText(parts1[1]);
-			  date2.setText(parts1[0]);
-		  }
-		  
-		  if (keyList.size() > 2) {
-			  String key2 = keyList.get(2);
-			  String[] parts2 = key2.split("\n");
-			  TextView name3 = (TextView)findViewById(R.id.name3);
-			  TextView date3 = (TextView)findViewById(R.id.date3);
-			  name3.setText(parts2[1]);
-			  date3.setText(parts2[0]);
-		  }
 
 	  }
 	  

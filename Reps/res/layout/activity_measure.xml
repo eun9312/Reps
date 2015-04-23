@@ -2,71 +2,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.dhcs.reps.MainActivity">
-    
-     <TextView
-        android:id="@+id/currname"
+    android:background="#ffffff"
+    tools:context="com.dhcs.reps.MainActivity" >
+
+    <TextView
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/actionbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="info"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#018FFC" />
 
-      <TextView
-          android:id="@+id/currweight"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/currname"
-          android:layout_centerHorizontal="true"
-          android:gravity="center"
-          android:text="weight"
-          android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:id="@+id/actionbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/home"
+        android:layout_alignTop="@+id/home"
+        android:scaleType="centerCrop"
+        android:src="@drawable/action_bar" />
 
-      <TextView
-          android:id="@+id/record"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentRight="true"
-          android:layout_below="@+id/currweight"
-          android:layout_marginTop="21dp"
-          android:gravity="center"
-          android:text="record"
-          android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ImageView
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="init"
+        android:src="@drawable/action_bar_home" />
 
-      <TextView
-          android:id="@+id/textView1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:text="Current count:"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/tracking_dottedcircle" />
 
-      <TextView
-          android:id="@+id/count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/textView1"
-          android:layout_centerHorizontal="true"
-          android:text="count"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
-      
-        <Button
-        android:id="@+id/button1"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Current Set"
+        android:layout_marginBottom="25dp"
+        android:layout_above="@+id/imageView2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FF7252" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/tracking_yellowbox" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/info"
+        android:layout_alignBottom="@+id/info"        
+        android:layout_toRightOf="@+id/info"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/tracking_pencil"
+        android:onClick="add_pre"/>
+
+    <ImageView
+        android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
-        android:text="Rest"
-        android:onClick="rest" />
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/tracking_complete"
+        android:onClick="finish_pre"/>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/tracking_plus"
+        android:onClick="add_pre"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Tracking Reps"
+        android:textColor="#FFCD57"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
     
-            </RelativeLayout>
+    
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:onClick="rest"
+        android:src="@drawable/tracking_rest" />
+
+    <TextView
+        android:id="@+id/cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="50dp"
+        android:textColor="#FFCD57"
+        android:text="0" />
+    
+</RelativeLayout>

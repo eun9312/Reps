@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="#018FFC"
+	android:background="#FFFFFF"
     tools:context="com.dhcs.reps.MainActivity" >
 
     <ImageView
@@ -10,6 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/menu_settings" />
 
     <ImageView
@@ -18,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView3"
         android:onClick="load"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/menu_viewprogress" />
 
     <ImageView
@@ -26,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView2"
         android:onClick="newWorkOut"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/menu_trackworkout" />
 
     <ImageView
@@ -45,5 +51,14 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/action_bar_home"
         android:onClick="init"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actionbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/reps_icon" />
 
 </RelativeLayout>

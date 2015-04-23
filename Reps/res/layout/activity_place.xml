@@ -31,16 +31,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:src="@drawable/tracking_go"
-        android:onClick="startMeasure"/>
+        android:onClick="ready"/>
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/actionbar"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:gravity="center"
+        android:textColor="#018FFC"
         android:text="Attach the phone to a barbell then press GO"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     

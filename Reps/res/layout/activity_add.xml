@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText3"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/tracking_checkmark"
         android:onClick="addWorkOut"/>
-    
     
         <ImageView
             android:id="@+id/imageView1"
@@ -24,7 +24,6 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
-            android:scaleType="fitXY"
             android:src="@drawable/tracking_plus" />
         
         <ImageView
@@ -39,21 +38,22 @@
             android:src="@drawable/tracking_dropdown" />
     
         <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="10dp" />
+            android:id="@+id/spinner1"
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText2"
+            android:layout_alignRight="@+id/editText2"
+            android:layout_below="@+id/imageView1"
+            android:layout_marginTop="20dp" />
         
-            <EditText
+           <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Weight (lb)"
         android:inputType="number"
@@ -61,7 +61,6 @@
         android:maxLines="1"
         android:singleLine="true" >
 
-        <requestFocus />
     </EditText>
         
         <EditText
