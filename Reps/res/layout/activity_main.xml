@@ -16,33 +16,6 @@
         android:src="@drawable/menu_trackworkout" />
 
     <ImageView
-        android:id="@+id/actionbar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:layout_alignTop="@+id/home"
-        android:layout_alignBottom="@+id/home"
-        android:src="@drawable/action_bar" />
-
-    <ImageView
-        android:id="@+id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/action_bar_home"
-        android:onClick="init"/>
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/actionbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/reps_icon" />
-
-    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -52,5 +25,24 @@
         android:onClick="load"
         android:scaleType="fitXY"
         android:src="@drawable/menu_viewprogress" />
+    
+        <ImageView
+        android:id="@+id/actionbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/action_bar" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/actionbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/reps_icon" />
 
 </RelativeLayout>

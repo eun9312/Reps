@@ -5,35 +5,25 @@
     android:background="#ffffff"
     tools:context="com.dhcs.reps.MainActivity" >
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/actionbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="info"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#018FFC" />
-
     <ImageView
         android:id="@+id/actionbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/home"
-        android:layout_alignTop="@+id/home"
         android:scaleType="centerCrop"
-        android:src="@drawable/action_bar" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/tracking_bar" />
 
     <ImageView
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:onClick="init"
-        android:src="@drawable/action_bar_home" />
+		android:layout_alignLeft="@+id/actionbar"
+		android:layout_alignBottom="@+id/actionbar"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/action_bar_home"
+        android:onClick="init"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -112,5 +102,17 @@
         android:layout_marginBottom="30dp"
         android:onClick="startMeasure"
         android:src="@drawable/tracking_go" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="info"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#018FFC" />
     
 </RelativeLayout>
