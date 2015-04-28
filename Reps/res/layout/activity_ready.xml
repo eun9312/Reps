@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Current Set"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
         android:layout_above="@+id/imageView2"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FF7252" />
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/tracking_yellowbox" />
 
     <ImageView
