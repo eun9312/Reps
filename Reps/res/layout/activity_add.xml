@@ -4,16 +4,29 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context="com.dhcs.reps.MainActivity" >
-    
-        <ImageView
+   
+            <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText3"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="-5dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/tracking_checkmark"
         android:onClick="addWorkOut"/>
+    
+            <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/buffer"
+            android:layout_alignLeft="@+id/imageView1"
+            android:layout_alignRight="@+id/imageView1"
+            android:layout_below="@+id/imageView1"
+            android:scaleType="fitXY"
+            android:layout_marginTop="-10dp"
+            android:src="@drawable/tracking_dropdown" />
+    
     
         <ImageView
             android:id="@+id/imageView1"
@@ -25,57 +38,54 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/tracking_plus" />
-        
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buffer"
-            android:layout_alignLeft="@+id/imageView1"
-            android:layout_alignRight="@+id/imageView1"
-            android:layout_below="@+id/imageView1"
-            android:scaleType="fitXY"
-            android:src="@drawable/tracking_dropdown" />
     
         <Spinner
             android:id="@+id/spinner1"
             style="@style/Widget.AppCompat.Spinner.DropDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText2"
-            android:layout_alignRight="@+id/editText2"
+            android:layout_alignLeft="@+id/imageView2"
+            android:layout_alignRight="@+id/imageView2"
             android:layout_below="@+id/imageView1"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
         
            <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Weight (lb)"
-        android:inputType="number"
-        android:lines="1"
-        android:maxLines="1"
-        android:singleLine="true" >
+               android:id="@+id/editText2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignLeft="@+id/imageView2"
+               android:layout_alignRight="@+id/imageView2"
+               android:layout_below="@+id/spinner1"
+               android:layout_marginTop="15dp"
+               android:ems="10"
+               android:hint="Weight (lb)"
+               android:inputType="number"
+               android:lines="1"
+               android:maxLines="1"
+               android:singleLine="true"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp">
 
     </EditText>
         
         <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Rest Time (sec)"
-        android:inputType="number"
-        android:lines="1"
-        android:maxLines="1"
-        android:singleLine="true" />
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView2"
+            android:layout_alignRight="@+id/imageView2"
+            android:layout_below="@+id/editText2"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Rest Time (sec)"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
 
     <TextView
         android:id="@+id/error"
@@ -83,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

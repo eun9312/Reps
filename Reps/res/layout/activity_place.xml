@@ -42,7 +42,7 @@
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:textColor="#018FFC"
-        android:text="Attach the phone to a barbell then press GO"
+        android:text="Attach the phone to a barbell then press GO\n\n(Screen must face directly upward or downward)"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
         </RelativeLayout>

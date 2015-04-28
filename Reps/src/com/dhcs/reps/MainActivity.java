@@ -19,14 +19,17 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class MainActivity extends Activity implements SensorEventListener{
 	private String currType;
@@ -123,7 +126,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 		isCountDownOn = false;
 		setContentView(R.layout.activity_add);
 		this.arraySpinner = new String[] {
-	            "Benchpress", "Deadlift", "Squat"
+	            "Choose an exercise","Benchpress", "Deadlift", "Squat"
 	        };
 	        Spinner s = (Spinner) findViewById(R.id.spinner1);
 	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -140,9 +143,10 @@ public class MainActivity extends Activity implements SensorEventListener{
 		currRestTime = restTimeField.getText().toString();
 		currType = spinner.getSelectedItem().toString();
 
-		if (currWeight.length() == 0 || currRestTime.length() == 0) {
+		if (currWeight.length() == 0 || currRestTime.length() == 0 ||
+				currType.equals("Choose an exercise")) {
 			TextView error = (TextView)findViewById(R.id.error);
-			error.setText("Invalid Input");
+			error.setText("Please fill in everything above");
 		}
 		else setContentView(R.layout.activity_place);
 	}
@@ -152,7 +156,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 		setContentView(R.layout.activity_ready);
 		TextView info = (TextView)findViewById(R.id.info);
 		info.setText(currType + ": " + currWeight+" lb");
-		TextView recordtxt = (TextView)findViewById(R.id.textView1);
+		TextView recordtxt = (TextView)findViewById(R.id.setNum);
 		recordtxt.setText("Current Set: " + currSet);
 	}
 	
@@ -174,7 +178,8 @@ public class MainActivity extends Activity implements SensorEventListener{
 	    double y =  event.values[1];
 	    double z =  event.values[2];
 	    
-	    double acc = Math.sqrt(x*x + y*y + z*z);
+	    //double acc = Math.sqrt(x*x + y*y + z*z);
+	    double acc = z;
 	    
 	    if (isOn) {
 	    	if (acc - prevAcc > 2) {
@@ -312,8 +317,10 @@ public class MainActivity extends Activity implements SensorEventListener{
 			  for (Integer weight : weightList) {
 				  List<Integer> repsList = weightData.get(weight);
 				  String repsString = "";
-				  for (Integer rep : repsList) {
-					  repsString += rep + " ";
+				  for (int i = 0; i < repsList.size(); i++) {
+					  Integer rep = repsList.get(i);
+					  repsString += rep + " reps";
+					  if (i != repsList.size()-1) repsString += ", ";
 				  }
 				  editor.putString(dateString + " " + type + " " + weight, repsString);
 				  editor.commit();
@@ -324,9 +331,58 @@ public class MainActivity extends Activity implements SensorEventListener{
 		  setContentView(R.layout.activity_saved);
 	  }
 	  
-	  @SuppressWarnings("unchecked")
 	  public void load(View v) {
 		  setContentView(R.layout.activity_load);
+		  Map<String,?> savedData = sharedPref.getAll();
+		  Set<String> savedKeySet = savedData.keySet();
+		  List<String> savedKeyList = new ArrayList<String>();
+		  savedKeyList.addAll(savedKeySet);
+		  Collections.sort(savedKeyList);
+		  Collections.reverse(savedKeyList);
+
+		  String prevDate = "";
+		  String prevType = "";
+		  
+
+		  for (String key : savedKeyList) {
+			  String[] keySplit = key.split(" ");
+			  String date = keySplit[0];
+			  String type = keySplit[1];
+			  String weight = keySplit[2];
+			  String reps = (String)savedData.get(key);
+			  
+			  LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayout01);
+			  if (!date.equals(prevDate)) {
+				  TextView dateTextView = new TextView(this);
+				  dateTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				  dateTextView.setText(date);
+				  dateTextView.setPadding(20, 20, 0, 20);
+				  dateTextView.setTextColor(0xFF018FFC);
+				  dateTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+				  linearLayout.addView(dateTextView);
+			  }
+			  
+			  if (!type.equals(prevType)) {
+				  TextView typeTextView = new TextView(this);
+				  typeTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				  typeTextView.setText("- "+type);
+				  typeTextView.setPadding(60, 0, 0, 20);
+				  typeTextView.setTextColor(0xFF018FFC);
+				  typeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+				  linearLayout.addView(typeTextView);
+			  }
+			  
+			  TextView weightTextView = new TextView(this);
+			  weightTextView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			  weightTextView.setText(weight + " lb - " + reps);
+			  weightTextView.setPadding(100, 0, 0, 20);
+			  weightTextView.setTextColor(0xFF018FFC);
+			  weightTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+			  linearLayout.addView(weightTextView);
+			  
+			  prevType = type;
+			  prevDate = date;
+		  }
 
 	  }
 	  

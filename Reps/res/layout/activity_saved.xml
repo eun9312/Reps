@@ -36,14 +36,14 @@
         android:text="Saved"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
+    <ImageView
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="50dp"
         android:onClick="init"
-        android:text="Done" />
+        android:src="@drawable/tracking_return"/>
     
         </RelativeLayout>
