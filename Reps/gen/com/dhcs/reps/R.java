@@ -1822,7 +1822,8 @@ containing a value of this type.
         public static final int activity_rest=0x7f03001e;
         public static final int activity_saved=0x7f03001f;
         public static final int activity_start=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
+        public static final int custom_spinner=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

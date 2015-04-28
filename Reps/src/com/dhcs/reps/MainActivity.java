@@ -23,6 +23,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -75,6 +76,11 @@ public class MainActivity extends Activity implements SensorEventListener{
    	     }
    	  }.start();
 	}
+    
+    public void initPre(View v) {
+    	hideKeyboard();
+    	init(v);
+    }
     
     public void init(View v) {
 		setContentView(R.layout.activity_main);
@@ -130,7 +136,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 	        };
 	        Spinner s = (Spinner) findViewById(R.id.spinner1);
 	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-	                android.R.layout.simple_spinner_item, arraySpinner);
+	                R.layout.custom_spinner, arraySpinner);
 	        s.setAdapter(adapter);
 	}
 	
@@ -143,12 +149,29 @@ public class MainActivity extends Activity implements SensorEventListener{
 		currRestTime = restTimeField.getText().toString();
 		currType = spinner.getSelectedItem().toString();
 
-		if (currWeight.length() == 0 || currRestTime.length() == 0 ||
-				currType.equals("Choose an exercise")) {
+		if (currType.equals("Choose an exercise")) {
 			TextView error = (TextView)findViewById(R.id.error);
-			error.setText("Please fill in everything above");
+			error.setText("Please choose an exercise");
+		} else if (currWeight.length() == 0) {
+			TextView error = (TextView)findViewById(R.id.error);
+			error.setText("Please fill in weight");
+		} else if (currRestTime.length() == 0) {
+			TextView error = (TextView)findViewById(R.id.error);
+			error.setText("Please fill in rest time");
 		}
-		else setContentView(R.layout.activity_place);
+		else {
+			hideKeyboard();
+			setContentView(R.layout.activity_place);
+		}
+	}
+	
+	private void hideKeyboard() {
+		EditText weightField = (EditText)findViewById(R.id.editText2);
+		EditText restTimeField = (EditText)findViewById(R.id.editText3);
+		InputMethodManager imm = (InputMethodManager)getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(weightField.getWindowToken(), 0);
+		imm.hideSoftInputFromWindow(restTimeField.getWindowToken(), 0);
 	}
 	
 	public void ready(View v) {

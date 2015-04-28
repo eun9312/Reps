@@ -1,5 +1,0 @@
-Design Elements needed
-
--background template
--buttons sprite img
--process icon gif
