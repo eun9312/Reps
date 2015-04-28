@@ -45,7 +45,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:text="Attach the phone to a barbell then press GO\n\n(Screen must face directly upward or downward)"
+        android:text="Attach the phone to your arm or leg then press GO"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#018FFC" />
     

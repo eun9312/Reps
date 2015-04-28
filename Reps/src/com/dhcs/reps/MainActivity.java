@@ -201,8 +201,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 	    double y =  event.values[1];
 	    double z =  event.values[2];
 	    
-	    //double acc = Math.sqrt(x*x + y*y + z*z);
-	    double acc = z;
+	    double acc = Math.sqrt(x*x + y*y + z*z);
 	    
 	    if (isOn) {
 	    	if (acc - prevAcc > 2) {
